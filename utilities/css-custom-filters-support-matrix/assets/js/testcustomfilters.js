@@ -162,6 +162,78 @@ $(function () {
             equal($div.css(filterProperty), filterValue, 'Luminosity blend-mode');
         })
 
+        test('XOR alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal xor), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'XOR alpha-compositing');
+        })
+
+        test('Clear alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal clear), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Clear alpha-compositing');
+        })
+
+        test('Copy alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal copy), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Copy alpha-compositing');
+        })
+
+        test('Source-over alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-over), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Source-over alpha-compositing');
+        })
+
+        test('Destination-over alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal destination-over), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Destination-over alpha-compositing');
+        })
+
+        test('Source-in alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-in), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Source-in alpha-compositing');
+        })
+
+        test('Destination-in alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal destination-in), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Destination-in alpha-compositing');
+        })
+
+        test('Source-out alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-out), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Source-out alpha-compositing');
+        })
+
+        test('Destination-out alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal destination-out), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Destination-out alpha-compositing');
+        })
+
+        test('Destination-atop alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal destination-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Destination-atop alpha-compositing');
+        })
+
+        test('Lighter alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal lighter), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Lighter alpha-compositing');
+        })
+
+        test('Darker alpha-compositing', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal darker), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Darker alpha-compositing');
+        })
+
         test('mat2() parameter', function() {
             filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, test mat2(1, 2, 3, 4))';
             $div.css(filterProperty, filterValue);
