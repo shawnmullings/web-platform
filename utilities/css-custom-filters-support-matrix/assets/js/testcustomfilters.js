@@ -52,22 +52,23 @@ $(function () {
         })
     }
 
-//    function testCustomFiltersAtRule() {
-//        module('CSS Custom Filters - @filter syntax', { 'setup': setup });
-//
-//        // There's no real need to use a new setup method here.
-//        test('Syntax', function() {
-//            var $sheet = $('style');
-//            $sheet.appendTo($('head'));
-//
-//            if (prova.styleSheet)
-//                console.log('EVVAIIIIIII!!!!!!');
-//            stylesheet.insertRule("@-webkit-filter test-filter {}", 0);
-//            var cssRule = stylesheet.cssRules.item(0);
-//            console.log('CSSRULE ==================== ' + cssRule);
-//        })
-//    }
+    function testCustomFiltersAtRule() {
+        module('CSS Custom Filters - @filter syntax', { 'setup': setup });
+
+        // There's no real need to use a new setup method here.
+        test('Syntax', function() {
+            var filterRuleString = "@" + filterProperty + " test-filter {}";
+            var docStyleSheets = document.styleSheets;
+            var lastStyleSheet = docStyleSheets.length - 1;
+            var lastCssRule = docStyleSheets.item(lastStyleSheet).cssRules.length - 1;
+            var refSheet = docStyleSheets.item(lastStyleSheet);
+
+            test('@filter syntax', function() {
+                equal(refSheet.insertRule(filterRuleString, lastCssRule), lastCssRule, 'Simple @filter');
+            })
+        })
+    }
 
     testCustomFiltersInline();
-//    testCustomFiltersAtRule();
+    testCustomFiltersAtRule();
 })   
