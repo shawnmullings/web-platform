@@ -72,6 +72,24 @@ $(function () {
             equal($div.css(filterProperty), filterValue, 'Array');
         })
 
+        test('Number parameter', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, number 1 2 3)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Number parameter');
+        })
+
+        test('Transform parameter', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, t rotate(0deg))';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, t matrix(1, 0, 0, 1, 0, 0))', 'Transform parameter');
+        })
+
+        test('Color parameter', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, c rgb(0, 128, 0))';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Color parameter');
+        })
+
         test('Multiply blend mode', function() {
             filterValue = 'custom(none mix(url(http://www.example.com/) multiply source-atop), 1 1)';
             $div.css(filterProperty, filterValue);
