@@ -34,7 +34,7 @@ $(function () {
 
     function setup() {
         var prefixedProperties = ['-webkit-filter', '-ms-filter', '-o-filter', '-moz-filter'];
-        var customFilterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1)';
+        var customFilterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 10 20)';
         $div = $('<div></div>').appendTo($('body'));
 
         for (var i = 0; i < prefixedProperties.length; ++i) {
@@ -44,31 +44,68 @@ $(function () {
         }
     }
 
+    function teardown() {
+        $div.css(filterProperty, "");
+    }
+
+
     function testCustomFiltersInline() {
-        module('CSS Custom Filters - Inline Syntax', { 'setup': setup });
+        module('CSS Custom Filters', { 'setup': setup, 'teardown': teardown });
 
         test('Inline Syntax', function() {
-            equal($div.css(filterProperty), 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1)', 'Simple Inline Filter');
+            equal($div.css(filterProperty), 'custom(none mix(url(http://www.example.com/) normal source-atop), 10 20)', 'Minimal shader with geometry is not supported');
+
+            var filterValue = 'custom(none url(http://www.example.com/), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Minimal shader with no mix is not supported');
+
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, testArray array(1, 2, 3))';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Array not supported');
+
+            filterValue = 'custom(none mix(url(http://www.example.com/) color source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Color blend-mode is not supported');
+
+
+            filterValue = 'custom(none mix(url(http://www.example.com/) hue source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Hue blend-mode is not supported');
+
+            filterValue = 'custom(none mix(url(http://www.example.com/) saturation source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Saturation blend-mode is not supported');
+
+            filterValue = 'custom(none mix(url(http://www.example.com/) luminosity source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Luminosity blend-mode is not supported');
         })
+
+//        var filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, testArray array(1.0, 2.0, 3.0))';
+//        $div.css(filterProperty, filterValue);
+
+//        test('Array', function() {
+//            equal($div.css(filterProperty), filterValue, 'Array not supported');
+//        })
     }
 
-    function testCustomFiltersAtRule() {
-        module('CSS Custom Filters - @filter syntax', { 'setup': setup });
-
+//    function testCustomFiltersAtRule() {
+//        module('CSS Custom Filters - @filter syntax', { 'setup': setup });
+//
         // There's no real need to use a new setup method here.
-        test('Syntax', function() {
-            var filterRuleString = "@" + filterProperty + " test-filter {}";
-            var docStyleSheets = document.styleSheets;
-            var lastStyleSheet = docStyleSheets.length - 1;
-            var lastCssRule = docStyleSheets.item(lastStyleSheet).cssRules.length - 1;
-            var refSheet = docStyleSheets.item(lastStyleSheet);
-
-            test('@filter syntax', function() {
-                equal(refSheet.insertRule(filterRuleString, lastCssRule), lastCssRule, 'Simple @filter');
-            })
-        })
-    }
+//        test('Syntax', function() {
+//            var filterRuleString = "@" + filterProperty + " test-filter {}";
+//            var docStyleSheets = document.styleSheets;
+//            var lastStyleSheet = docStyleSheets.length - 1;
+//            var lastCssRule = docStyleSheets.item(lastStyleSheet).cssRules.length - 1;
+//            var refSheet = docStyleSheets.item(lastStyleSheet);
+//
+//            test('@filter syntax', function() {
+//                equal(refSheet.insertRule(filterRuleString, lastCssRule), lastCssRule, 'Simple @filter');
+//            })
+//        })
+//    }
 
     testCustomFiltersInline();
-    testCustomFiltersAtRule();
+    //testCustomFiltersAtRule();
 })   
