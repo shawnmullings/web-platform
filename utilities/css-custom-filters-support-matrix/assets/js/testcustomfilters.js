@@ -31,6 +31,7 @@ $(function () {
 
     var $div;
     var filterProperty = "filter"; // Fallback value
+    var filterValue;
 
     function setup() {
         var prefixedProperties = ['-webkit-filter', '-ms-filter', '-o-filter', '-moz-filter'];
@@ -42,51 +43,149 @@ $(function () {
             if ($div.css(prefixedProperties[i]) == customFilterValue)
                 filterProperty = prefixedProperties[i];
         }
+        $div.css(filterProperty, '');
     }
 
     function teardown() {
-        $div.css(filterProperty, "");
+        $div.remove();
     }
 
 
     function testCustomFiltersInline() {
         module('CSS Custom Filters', { 'setup': setup, 'teardown': teardown });
 
-        test('Inline Syntax', function() {
-            equal($div.css(filterProperty), 'custom(none mix(url(http://www.example.com/) normal source-atop), 10 20)', 'Minimal shader with geometry is not supported');
-
-            var filterValue = 'custom(none url(http://www.example.com/), 1 1)';
+        test('Minimal with mix()', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1)';
             $div.css(filterProperty, filterValue);
-            equal($div.css(filterProperty), filterValue, 'Minimal shader with no mix is not supported');
-
-            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, testArray array(1, 2, 3))';
-            $div.css(filterProperty, filterValue);
-            equal($div.css(filterProperty), filterValue, 'Array not supported');
-
-            filterValue = 'custom(none mix(url(http://www.example.com/) color source-atop), 1 1)';
-            $div.css(filterProperty, filterValue);
-            equal($div.css(filterProperty), filterValue, 'Color blend-mode is not supported');
-
-
-            filterValue = 'custom(none mix(url(http://www.example.com/) hue source-atop), 1 1)';
-            $div.css(filterProperty, filterValue);
-            equal($div.css(filterProperty), filterValue, 'Hue blend-mode is not supported');
-
-            filterValue = 'custom(none mix(url(http://www.example.com/) saturation source-atop), 1 1)';
-            $div.css(filterProperty, filterValue);
-            equal($div.css(filterProperty), filterValue, 'Saturation blend-mode is not supported');
-
-            filterValue = 'custom(none mix(url(http://www.example.com/) luminosity source-atop), 1 1)';
-            $div.css(filterProperty, filterValue);
-            equal($div.css(filterProperty), filterValue, 'Luminosity blend-mode is not supported');
+            equal($div.css(filterProperty), filterValue, 'Minimal shader with mix');
         })
 
-//        var filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, testArray array(1.0, 2.0, 3.0))';
-//        $div.css(filterProperty, filterValue);
+        test('Minimal with no mix()', function() {
+            filterValue = 'custom(none url(http://www.example.com/), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Minimal shader with no mix');
+        })
 
-//        test('Array', function() {
-//            equal($div.css(filterProperty), filterValue, 'Array not supported');
+        test('array parameter', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, testArray array(1, 2, 3))';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Array');
+        })
+
+        test('Multiply blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) multiply source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Multiply blend-mode');
+        })
+
+        test('Screen blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) screen source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Screen blend-mode');
+        })
+
+        test('Overlay blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) overlay source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Overlay blend-mode');
+        })
+
+        test('Darken blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) darken source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Darken blend-mode');
+        })
+
+        test('Lighten blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) lighten source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Lighten blend-mode');
+        })
+
+        test('Color-dodge blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) color-dodge source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Color-dodge blend-mode');
+        })
+
+        test('Color-burn blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) color-burn source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Color-burn blend-mode');
+        })
+
+        test('Hard-light blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) hard-light source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Hard-light blend-mode');
+        })
+
+        test('Soft-light blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) soft-light source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Soft-light blend-mode');
+        })
+
+        test('Difference blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) difference source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Difference blend-mode');
+        })
+
+        test('Exclusion blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) exclusion source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Exclusion blend-mode');
+        })
+
+        test('Color blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) color source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Color blend-mode');
+        })
+
+        test('Hue blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) hue source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Hue blend-mode');
+        })
+
+        test('Saturation blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) saturation source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Saturation blend-mode');
+        })
+
+        test('Luminosity blend mode', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) luminosity source-atop), 1 1)';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'Luminosity blend-mode');
+        })
+
+        test('mat2() parameter', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, test mat2(1, 2, 3, 4))';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'mat2()');
+        })
+
+        test('mat3() parameter', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, test mat3(1, 2, 3, 4, 5, 6, 7, 8, 9))';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'mat3()');
+        })
+
+        test('mat4() parameter', function() {
+            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, test mat4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16))';
+            $div.css(filterProperty, filterValue);
+            equal($div.css(filterProperty), filterValue, 'mat4()');
+        })
+
+//        test('Number parameter', function() {
+//            filterValue = 'custom(none mix(url(http://www.example.com/) normal source-atop), 1 1, test (1, 2, 3, 4, 5, 6, 7, 8, 9))';
+//            $div.css(filterProperty, filterValue);
+//            equal($div.css(filterProperty), filterValue, 'mat3()');
 //        })
+
     }
 
 //    function testCustomFiltersAtRule() {
